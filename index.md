@@ -4,7 +4,7 @@ layout: page
 
 # About Me
 
-<img src="https://casslii.github.io/images/cass.jpg" class="floatpic" >
+<img src="https://Cassandra265.github.io/images/cass.jpg" class="floatpic" >
 
 Here is **Wanxin Li (Cass)**. 
 
