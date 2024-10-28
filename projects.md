@@ -9,11 +9,9 @@ title: Projects
 -	Developed a scalable workflow for mapping and tracking over 70,000 urban trees species in Los Angles
 -	Led the research on USC tree mapping using NAIP data and random forest; achieved over 68% accuracy in species identification, enhancing ecological insights for the USC campus environment
 -	Implemented multi levels tree species classification combine 4-bands imagery and meta canopy height dataset and using deep learning methods. Conducted reclassification based on 100 tree species for analysis
-
-The figure below shows our workflow: 
-![My Image](https://Cassandra265.github.io/images/projects/tree_1.png)
-
-
+The figure below shows our workflow:
+**Click below for research update:**
+[![My Image](https://Cassandra265.github.io/images/projects/tree_1.png)](https://Cassandra265.github.io/file/tree.pdf)
 ##### Los Angeles Geospatial Summit Esri ArcGIS StoryMap Competition -- 2024 Geospatial Summit
 
 In the 2024 Geospatial summit, we shows a test area for the urban tree research. Here is a link to our [USC Campous Tree Detetct Project](https://storymaps.arcgis.com/stories/01c9dd1586954854a395453c11b0c999), this project is fcous on the campus level tree speices classfication. The map below shows our results for the tree sepeices classfication, the research is based on random forest.
