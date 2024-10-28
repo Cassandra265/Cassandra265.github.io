@@ -20,7 +20,15 @@ In the 2024 Geospatial summit, we shows a test area for the urban tree research.
 
 [![My Image](https://Cassandra265.github.io/images/projects/usctree.jpg)](https://storymaps.arcgis.com/stories/01c9dd1586954854a395453c11b0c999)
 
+---
 
+## Web-GIS Project Oil Well Loactions web Map based on Linux
+Contributed to the development of an **interactive web-based visualization system** for oil well data. Key responsibilities included enhancing web page design and user interface, implementing interactive features using Leaflet.js for geospatial data visualization, and creating comprehensive project documentation. The role involved working on the integration of MySQL database with the web interface to enable real-time data display.
+
+Demonstrated proficiency in web development, particularly in creating user-friendly interfaces for complex data visualization on Linux systems. Gained valuable experience in geospatial data handling, database integration, and technical documentation while working in a Linux environment.
+
+[![My Image](https://Cassandra265.github.io/images/projects/web.png)]
+(https://Cassandra265.github.io/file/well_location.html)
 ---
 
 ## Chatbot Development with Large Language Models
