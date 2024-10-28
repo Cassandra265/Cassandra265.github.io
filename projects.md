@@ -11,7 +11,7 @@ title: Projects
 -	Implemented multi levels tree species classification combine 4-bands imagery and meta canopy height dataset and using deep learning methods. Conducted reclassification based on 100 tree species for analysis
 
 The figure below shows our workflow: 
-![My Image](https://Cassandra265.github.io/images/projects/tree.png)
+![My Image](https://Cassandra265.github.io/images/projects/tree_1.png)
 
 
 ##### Los Angeles Geospatial Summit Esri ArcGIS StoryMap Competition -- 2024 Geospatial Summit
