@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Oil Wells Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        #map {
+            height: 94vh;
+            width: 100vw;
+            padding: 0;
+            margin: 0;
+        }
+        #title {
+            background-color: #4a90e2;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Helvetica Neue', sans-serif;
+            border-bottom: 3px solid #385d8a;
+            margin-bottom: 5px;
+        }
+        .legend {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+         .attribution {
+            background-color: rgba(255, 255, 255, 0.7); /* semi-transparent white background */
+            margin-right: 10px; /* right margin for spacing */
+            margin-bottom: 10px; /* bottom margin for spacing */
+            padding: 10px; /* padding inside the box */
+            font-size: 16px; /* larger font size */
+            line-height: 1.4; /* line height for better readability */
+            font-family: 'Helvetica Neue', sans-serif; /* font family */
+            color: #333; /* text color */
+            border-radius: 5px; /* rounded corners */
+        }       
+    </style>
+</head>
+<body>
+    <div id="title">Oil Well Locations</div>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="combined_data.js"></script>
+    <script>
+        function calculateCentroid(data) {
+            var sumLat = 0, sumLon = 0;
+            data.forEach(function(well) {
+                sumLat += parseFloat(well.latitude);
+                sumLon += parseFloat(well.longitude);
+            });
+            return [sumLat / data.length, sumLon / data.length];
+        }
+
+        if (combinedData && Array.isArray(combinedData)) {
+            var centroid = calculateCentroid(combinedData);
+
+            // Define base layers for layer switcher control
+            var esriImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            });
+            var openStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            });
+
+            // Initialize the map on the "esriImagery" layer
+            var map = L.map('map', {
+                center: centroid,
+                zoom: 9,
+                layers: [esriImagery] // start with this layer
+            });
+
+            // Base layers for layer switcher control (base maps)
+            var baseLayers = {
+                "ESRI World Imagery": esriImagery,
+                "OpenStreetMap": openStreetMap
+            };
+
+            // Add the layer switcher control to the map
+            L.control.layers(baseLayers).addTo(map);
+
+
+
+
+            combinedData.forEach(function(well) {
+                var wellDetailsPopup = "<b>Operator:</b> " + well.operator +
+                "<br><b>Well Name:</b> " + well.well_name +
+                "<br><b>API:</b> " + well.API +
+                "<br><b>Surface Location:</b> " + well.surface_location +
+                "<br><b>County/State:</b> " + well.county_state +
+                "<br><b>Latitude:</b> " + well.latitude +
+                "<br><b>Longitude:</b> " + well.longitude +
+                "<br><b>Datum:</b> " + well.datum +
+                "<br><b>Barrels of Oil Produced:</b> " + well.barrels_of_oil_produced +
+                "<br><b>MCF of Gas Produced:</b> " + well.mcf_of_gas_produced +
+                "<br><b>Well Status:</b> " + well.well_status +
+                "<br><b>Well Type:</b> " + well.well_type +
+                "<br><b>Closest City:</b> " + well.closest_city +
+                "<br><b>Date Stimulated:</b> " + well.Date_Stimulated +
+                "<br><b>Stimulated Formation:</b> " + well.Stimulated_Formation +
+                "<br><b>Top Ft:</b> " + well.Top_Ft +
+                "<br><b>Bottom Ft:</b> " + well.Bottom_Ft +
+                "<br><b>Stimulation Stages:</b> " + well.Stimulation_Stages +
+                "<br><b>Volume:</b> " + well.Volume +
+                "<br><b>Volume Units:</b> " + well.Volume_Units +
+                "<br><b>Type Treatment:</b> " + well.Type_Treatment +
+                "<br><b>Acid Percent:</b> " + (well.Acid_Percent || 'N/A') +
+                "<br><b>Lbs Proppant:</b> " + well.Lbs_Proppant +
+                "<br><b>Maximum Treatment Pressure PSI:</b> " + well.Maximum_Treatment_Pressure_PSI +
+                "<br><b>Maximum Treatment Rate BBLS/Min:</b> " + well.Maximum_Treatment_Rate_BBLS_Min +
+                "<br><b>Details:</b> " + well.Details;
+                L.marker([parseFloat(well.latitude), parseFloat(well.longitude)]).addTo(map)
+                    .bindPopup(wellDetailsPopup);
+            });
+
+            var legend = L.control({position: 'topright'});
+
+            legend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend'),
+                    labels = ['<strong>Legend</strong>'],
+                    categories = ['Oil Well'];
+
+                for (var i = 0; i < categories.length; i++) {
+                    labels.push(
+                        '<i style="background: url(https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png); background-size: 18px 30px; width: 18px; height: 30px; display: block; background-position: center; background-repeat: no-repeat;"></i> ' +
+                        (categories[i] ? categories[i] : '+'));
+                }
+                div.innerHTML = labels.join('<br>');
+                return div;
+            };
+
+            function getColor(category) {
+                return category === 'Oil Well' ? 'blue' : 'grey';
+            }
+
+            legend.addTo(map);
+
+            var attribution = L.control({position: 'bottomright'});
+            attribution.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'attribution');
+                div.innerHTML = "<strong>CyberTA Group</strong><br>Group members:<br>Yuehan Wen<br>Kuanhsien Lin<br>Wanxin Li";
+                return div;
+            };
+            attribution.addTo(map);
+
+        } else {
+            console.error("combinedData is not available or not an array.");
+        }
+    </script>
+</body>
+</html>
+
