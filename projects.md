@@ -61,12 +61,4 @@ A case study in the United States during January and October in 2021 to research
 
 ---
 
-## Activities
-
-> Esri User Conference 2024 Student assistant:
-
-<div>
-<img src="https://casslii.github.io/images/esri.jpg">
-</div>
-<br>
 
